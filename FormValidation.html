@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Sample Form Validation Program
+	</title>
+	<style type="text/css">
+		#main{
+			border : thin solid 10px lightgray;
+			width : 70%;
+			margin: 5% auto;
+			padding: 3%;
+			font-family: sans-serif;
+			-moz-box-shadow:    inset 0 0 10px lightgray;
+			-webkit-box-shadow: inset 0 0 10px lightgray;
+			box-shadow:         inset 0 0 10px lightgray;
+		}
+		.help {
+			color:red;
+			font:sans-serif;
+			font-size:15px;
+			font-style: italic;
+		}
+		sup,span{
+			color:red;
+			font-size: 1vw;
+		}
+		label{
+			font-size: 30px;
+			font-size: 1.5vw;    		
+    		width:30%;
+    		text-transform: uppercase;
+    		display:inline-block
+		}
+		input{
+			width:50%;
+			height: 2vw;
+			-moz-box-shadow:    inset 0 0 10px lightgray;
+			-webkit-box-shadow: inset 0 0 10px lightgray;
+			box-shadow:         inset 0 0 10px lightgray;
+		}
+		h2{
+			text-align: center;
+    		text-transform: uppercase;
+		}
+	</style>
+</head>
+<body>
+	<!-- Main div for holding form -->
+	<div id="main">
+		<h2>Sample Form Validation</h2>
+		<form id="form">
+
+			<!-- Phone Number -->
+			<label>zip:<sup> *</sup></label>
+			<input type="text" name="phone" id="0" size="12"
+			onblur="validateNonEmpty(this);">
+			<span id='span0' class='help'></span>
+			<br>
+
+			<!-- Phone Number -->
+			<label>Message:<sup> *</sup></label>
+			<input type="text" name="phone" id="1" size="12"
+			onblur="validateNonEmpty(this);">
+			<span id='span1' class='help'></span>
+			<br>
+
+			<!-- Phone Number -->
+			<label>Name:<sup> *</sup></label>
+			<input type="text" name="phone" id="2" size="12"
+			onblur="validateNonEmpty(this);">
+			<span id='span2' class='help'></span>
+			<br>
+
+			<!-- Phone Number -->
+			<label>Phone Number:<sup> *</sup></label>
+			<input type="text" name="phone" id="3" size="12"
+			onblur="validateNonEmpty(this);">
+			<span id='span3' class='help'></span>
+			<br>
+
+			<!-- Phone Number -->
+			<label>Email Address:<sup> *</sup></label>
+			<input type="text" name="phone" id="4" size="12"
+			onblur="validateNonEmpty(this);">
+			<span id='span4' class='help'></span>
+			<br>
+
+		</form>
+	</div>
+	<script type="text/javascript">
+
+
+		wireFunctions();
+
+		// Get all the input elements and apply empty validation check
+		function wireFunctions(){
+
+			var inputs = document.getElementsByTagName('input');
+			console.log(inputs);
+			for(var i=0; i<inputs.length; i++){
+				inputs[i].onblur = function() {
+					checkEmpty(this);
+				}
+			}
+
+			// Function for checking if a particular field is empty
+			function checkEmpty(inputfield) {
+				var span = document.getElementById('span'+inputfield.id);
+				console.log(span);
+				if(inputfield.value.length == 0){
+					span.innerHTML = 'Please enter a value';
+					document.getElementById('main').style.boxShadow = 'inset 0 0 10px red';
+				}
+				else{
+					span.innerHTML = '';
+					document.getElementById('main').style.boxShadow = 'inset 0 0 10px lightgray';
+				}
+			}
+		}
+
+	</script>
+</body>
+</html>

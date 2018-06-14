@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Duncan's just in time donut's</title>
+	<style type="text/css">
+		#frame{
+			margin: auto;
+			width : 50%;
+			padding: 5%;
+			border: solid 1px gray;
+			color: gray;
+		}
+
+		.field label{
+			display: inline-block;
+			width: 100px;
+		}
+	</style>
+	<script type="text/javascript">
+		function updateOrder() {
+			console.log('called updateOrder');
+			const TAXRATE = 0.9;
+			const PRICE = 0.50;
+
+			var numberOfCakes = parseInt(document.getElementById('cake').value);
+			var numberOfChocolates = parseInt(document.getElementById('choco').value);
+
+			if(isNaN(numberOfCakes)) numberOfCakes = 0;
+			if(isNaN(numberOfChocolates)) numberOfChocolates = 0;
+
+			var subTotal = (numberOfCakes+numberOfChocolates) * PRICE;
+
+			var taxAmount = subTotal * TAXRATE;
+			var total = subTotal + taxAmount;
+
+			console.log(parseDozens(document.getElementById('dozen').value));
+
+			document.getElementById('st').innerHTML = '$ '+subTotal.toFixed(2);
+			document.getElementById('tax').innerHTML = '$'+taxAmount.toFixed(2);
+			document.getElementById('ta').innerHTML = '$'+total.toFixed(2);
+
+		}
+		function parseDozens(dozenString){ var numDonuts = parseInt(dozenString); if(dozenString.indexOf('dozen')!= -1) return numDonuts*12;}
+		function placeOrder(form) {
+			// submit form to server
+			form.submit();
+		}
+	</script>
+</head>
+<body>
+	<div id="frame">
+		<div class="field">
+			<label># of cakes</label><input type="text" name="cake" id="cake">
+		</div><br>
+		<div class="field">
+			<label># of chocolates</label><input type="text" name="cake" id="choco">
+		</div><br>
+		<div class="field">
+			<label># of dozens</label><input type="text" name="" id="dozen">
+		</div><br>
+		<div class="field">
+			<input type="button" name="button" value="Place Order" onclick="updateOrder();">
+		</div>
+		<br>
+		<div id="result">
+			<label>Sub Total</label> <span id="st"></span><br>
+			<label>Tax Amount</label> <span id="tax"></span><br>
+			<label>Total Amount</label> <span id="ta"></span>
+		</div>
+	</div>
+</body>
+</html>

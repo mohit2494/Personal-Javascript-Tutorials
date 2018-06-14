@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// blog </span>
+		<span style="color: #008800; font-weight: bold">function</span> Blog(body,date){
+			<span style="color: #008800; font-weight: bold">this</span>.body <span style="color: #333333">=</span> body;
+			<span style="color: #008800; font-weight: bold">this</span>.date <span style="color: #333333">=</span> date;
+		}	
+
+		<span style="color: #008800; font-weight: bold">var</span> constBlog <span style="color: #333333">=</span> [
+			<span style="color: #008800; font-weight: bold">new</span> Blog(<span style="background-color: #fff0f0">&quot;Got the new cube I ordered...&quot;</span>, <span style="color: #008800; font-weight: bold">new</span> <span style="color: #007020">Date</span>(<span style="background-color: #fff0f0">&quot;08/14/2008&quot;</span>)), 
+			<span style="color: #008800; font-weight: bold">new</span> Blog(<span style="background-color: #fff0f0">&quot;Solved the new cube but of course...&quot;</span>, <span style="color: #008800; font-weight: bold">new</span> <span style="color: #007020">Date</span>(<span style="background-color: #fff0f0">&quot;08/19/2008&quot;</span>)),
+			<span style="color: #008800; font-weight: bold">new</span> Blog(<span style="background-color: #fff0f0">&quot;Managed to get a headache toiling...&quot;</span>, <span style="color: #008800; font-weight: bold">new</span> <span style="color: #007020">Date</span>(<span style="background-color: #fff0f0">&quot;08/16/2008&quot;</span>)),
+			<span style="color: #008800; font-weight: bold">new</span> Blog(<span style="background-color: #fff0f0">&quot;Found a 7x7x7 cube for sale...&quot;</span>, <span style="color: #008800; font-weight: bold">new</span> <span style="color: #007020">Date</span>(<span style="background-color: #fff0f0">&quot;08/21/2008&quot;</span>))
+		];
+
+		<span style="color: #888888">// Global array of blog entries</span>
+		<span style="color: #008800; font-weight: bold">var</span> blog <span style="color: #333333">=</span> [];
+
+		<span style="color: #888888">// function for searching text in the blogs</span>
+		<span style="color: #008800; font-weight: bold">function</span> searchBlog(){
+			console.log(<span style="background-color: #fff0f0">&#39;search blog called!&#39;</span>);
+			<span style="color: #008800; font-weight: bold">var</span> searchText <span style="color: #333333">=</span> <span style="color: #007020">document</span>.getElementById(<span style="background-color: #fff0f0">&#39;searchtext&#39;</span>);
+			<span style="color: #008800; font-weight: bold">for</span>(<span style="color: #008800; font-weight: bold">var</span> i<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> blog.length; i<span style="color: #333333">++</span>){
+				<span style="color: #008800; font-weight: bold">var</span> stringIndex <span style="color: #333333">=</span> blog[i].body.toLowerCase().indexOf(searchText.value.toLowerCase());
+				<span style="color: #008800; font-weight: bold">if</span>( stringIndex <span style="color: #333333">!=</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>){
+					console.log(<span style="color: #008800; font-weight: bold">typeof</span>(blog[i].body));
+					<span style="color: #008800; font-weight: bold">var</span> beforeString <span style="color: #333333">=</span> blog[i].body.substr(<span style="color: #0000DD; font-weight: bold">0</span>,stringIndex<span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>);
+					<span style="color: #008800; font-weight: bold">var</span> searchString <span style="color: #333333">=</span> blog[i].body.substr(stringIndex,searchText.value.length);
+					<span style="color: #008800; font-weight: bold">var</span> afterString <span style="color: #333333">=</span> blog[i].body.substr(stringIndex<span style="color: #333333">+</span>(searchText.value.length),blog[i].body.length<span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>);
+					<span style="color: #008800; font-weight: bold">var</span> finalString <span style="color: #333333">=</span> beforeString <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;&lt;mark&gt; &quot;</span> <span style="color: #333333">+</span> searchString <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; &lt;/mark&gt;&quot;</span> <span style="color: #333333">+</span> afterString;
+					blog[i].body <span style="color: #333333">=</span> finalString;
+				}
+			}
+			showBlog();
+		}
+
+		<span style="color: #888888">// resets the search variable</span>
+		<span style="color: #008800; font-weight: bold">function</span> resetSearch(){
+			blog <span style="color: #333333">=</span> [];
+			constBlog.forEach(<span style="color: #008800; font-weight: bold">function</span>(y){ 
+				blog.push(<span style="color: #008800; font-weight: bold">new</span> Blog(y.body,y.date));
+			})
+			<span style="color: #007020">document</span>.getElementById(<span style="background-color: #fff0f0">&#39;searchtext&#39;</span>).value <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39;&#39;</span>;
+			showBlog();
+		}
+
+		<span style="color: #888888">// custom compare function for blog sorting</span>
+		<span style="color: #008800; font-weight: bold">function</span> compare(blog1,blog2) {
+			<span style="color: #008800; font-weight: bold">return</span> blog2.date <span style="color: #333333">-</span> blog1.date;
+		}
+
+		<span style="color: #008800; font-weight: bold">function</span> showBlog(randomBlog){
+			
+			<span style="color: #008800; font-weight: bold">var</span> blogText <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39;&#39;</span>; 				
+
+			<span style="color: #888888">// initialise blog if it has not been yet initialized</span>
+			<span style="color: #008800; font-weight: bold">if</span>(blog.length <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+			{
+				constBlog.forEach(<span style="color: #008800; font-weight: bold">function</span>(y){ 
+					blog.push(<span style="color: #008800; font-weight: bold">new</span> Blog(y.body,y.date));
+				})
+			}
+			blog.sort(compare);
+			console.log(blog);
+
+			<span style="color: #008800; font-weight: bold">if</span>(randomBlog <span style="color: #333333">!=</span> <span style="color: #008800; font-weight: bold">null</span>){
+				blogText <span style="color: #333333">+=</span> <span style="background-color: #fff0f0">&quot;&lt;p&gt;&lt;strong&gt;&quot;</span> <span style="color: #333333">+</span> (blog[randomBlog].date.getMonth()<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span>) <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">+</span>
+				(blog[randomBlog].date.getDate())<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">+</span>(blog[randomBlog].date.getFullYear())
+				<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;&lt;/strong&gt;&lt;br&gt;&quot;</span><span style="color: #333333">+</span>blog[randomBlog].body<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;&lt;/p&gt;&quot;</span>;
+			}
+			<span style="color: #008800; font-weight: bold">else</span>{
+				<span style="color: #008800; font-weight: bold">for</span>(<span style="color: #008800; font-weight: bold">var</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span> ; i <span style="color: #333333">&lt;</span>blog.length ; i<span style="color: #333333">++</span>){
+					<span style="color: #008800; font-weight: bold">if</span>( i<span style="color: #333333">%</span><span style="color: #0000DD; font-weight: bold">2</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span> ) blogText <span style="color: #333333">+=</span> <span style="background-color: #fff0f0">&quot;&lt;p style=&#39;background-color:rgb(228, 241, 254)&#39;&gt;&quot;</span>;
+					<span style="color: #008800; font-weight: bold">else</span> blogText <span style="color: #333333">+=</span> <span style="background-color: #fff0f0">&quot;&lt;p&gt;&quot;</span>;
+					<span style="color: #888888">// add date to blog</span>
+					blogText <span style="color: #333333">+=</span> <span style="background-color: #fff0f0">&quot;&lt;strong&gt;&quot;</span> <span style="color: #333333">+</span> (blog[i].date.getMonth()<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span>) <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">+</span>
+					(blog[i].date.getDate())<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">+</span>(blog[i].date.getFullYear())<span style="color: #333333">+</span>
+					<span style="background-color: #fff0f0">&quot;&lt;/strong&gt;&lt;br&gt;&quot;</span><span style="color: #333333">+</span>blog[i].body<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;&lt;/p&gt;&quot;</span>;
+				}
+			}
+			<span style="color: #007020">document</span>.getElementById(<span style="background-color: #fff0f0">&#39;blog&#39;</span>).innerHTML <span style="color: #333333">=</span> blogText;
+		}	
+
+		<span style="color: #888888">// showing a random blog</span>
+		<span style="color: #008800; font-weight: bold">function</span> showRandomBlog(){
+			<span style="color: #888888">// pick index of a random blog</span>
+			<span style="color: #008800; font-weight: bold">var</span> i <span style="color: #333333">=</span> <span style="color: #007020">Math</span>.floor(<span style="color: #007020">Math</span>.random()<span style="color: #333333">*</span>blog.length);
+			showBlog(i);
+		}
+</pre></div>
+
+</body>
+</html>

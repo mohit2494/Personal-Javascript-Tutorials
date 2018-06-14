@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Youcube - The blog for cube puzzlers</title>
+	<style type="text/css">
+		#main{
+			width: 80%;
+			margin: 5% auto;
+			border: thin solid lightgray;
+			box-shadow: 0px 0px 10px darkgray;
+			padding:5%;
+		}
+		h3{
+			text-align: center;
+		}
+		img{
+			height: 50%;
+			width: 50%;
+			border: thin solid darkgray;
+
+		}
+		span,searchspan{
+			display:block;
+			text-align: center;
+		}
+		p{
+			margin: 5%;
+			font-family:sans-serif;
+			box-shadow: 0px 0px 5px lightgray;
+		}
+	</style>
+	<script type="text/javascript">
+			
+		var index = -1; // stores the index of a random blog	
+
+		// This function holds everything regarding a blog.
+		// This function acts like a instance of an object.
+		function Blog(body,date){
+			this.body = body;
+			this.date = date;
+
+			// function to return string composed of the body and the date
+			this.toString = function () {
+				return "[" + 
+				(this.date.getMonth() + 1) + "/" + 
+				this.date.getDate() + "/" + 
+				this.date.getFullYear() + "] " + this.body;			
+			}
+
+			// function to convert the body and the date to html
+			this.toHTML = function (highlight) {
+				
+				// Use a gray background as a highlight, if specified
+				var blogHTML = "";
+				blogHTML += highlight ? "<p style=’background‐color:#EEEEEE’>" : "<p>";
+
+				// Generate the formatted blog HTML code
+				blogHTML += "<strong>" + (this.date.getMonth() + 1) + "/" +
+				this.date.getDate() + "/" + this.date.getFullYear() + "</strong><br />" +
+				this.body + "</p>"; 
+
+				return blogHTML;
+			}
+
+			this.containsText = function(text){
+				return (this.body.toLowerCase().indexOf(text.toLowerCase)!=-1);
+			}
+		}	
+
+		var constBlog = [
+			new Blog("Got the new cube I ordered...", new Date("08/14/2008")), 
+			new Blog("Solved the new cube but of course...", new Date("08/19/2008")),
+			new Blog("Managed to get a headache toiling...", new Date("08/16/2008")),
+			new Blog("Found a 7x7x7 cube for sale...", new Date("08/21/2008"))
+		];
+
+		// Global array of blog entries
+		var blog = [];
+
+		// function for searching text in the blogs
+		function searchBlog(){
+			console.log('search blog called!');
+			var searchText = document.getElementById('searchtext');
+			for(var i=0; i < blog.length; i++){
+				var stringIndex = blog[i].body.toLowerCase().indexOf(searchText.value.toLowerCase());
+				if( stringIndex != -1){
+					console.log(typeof(blog[i].body));
+					var beforeString = blog[i].body.substr(0,stringIndex-1);
+					var searchString = blog[i].body.substr(stringIndex,searchText.value.length);
+					var afterString = blog[i].body.substr(stringIndex+(searchText.value.length),blog[i].body.length-1);
+					var finalString = beforeString + "<mark> " + searchString + " </mark>" + afterString;
+					blog[i].body = finalString;
+				}
+			}
+			console.log('index while searching blog'+index);
+			showBlog(index);
+		}
+
+		// resets the search variable
+		function resetSearch(){
+			blog = [];
+			constBlog.forEach(function(y){ 
+				blog.push(new Blog(y.body,y.date));
+			})
+			index = -1;
+			document.getElementById('searchtext').value = '';
+			showBlog(index);
+		}
+
+		// custom compare function for blog sorting
+		function compare(blog1,blog2) {
+			return blog2.date - blog1.date;
+		}
+
+		function showBlog(randomBlog){
+			
+			var blogText = ''; 				
+
+			// initialise blog if it has not been yet initialized
+			if(blog.length == 0)
+			{
+				constBlog.forEach(function(y){ 
+					blog.push(new Blog(y.body,y.date));
+				})
+			}
+			blog.sort(compare);
+
+			if(randomBlog != -1){
+				blogText += "<p><strong>" + (blog[randomBlog].date.getMonth()+1) + "/"+
+				(blog[randomBlog].date.getDate())+"/"+(blog[randomBlog].date.getFullYear())
+				+"</strong><br>"+blog[randomBlog].body+"</p>";
+			}
+			else{
+				for(var i = 0 ; i <blog.length ; i++){
+					if( i%2 == 0 ) blogText += "<p style='background-color:rgb(228, 241, 254)'>";
+					else blogText += "<p>";
+					// add date to blog
+					blogText += "<strong>" + (blog[i].date.getMonth()+1) + "/"+
+					(blog[i].date.getDate())+"/"+(blog[i].date.getFullYear())+
+					"</strong><br>"+blog[i].body+"</p>";
+				}
+			}
+			document.getElementById('blog').innerHTML = blogText;
+		}	
+
+		// showing a random blog
+		function showRandomBlog(){
+			// pick index of a random blog
+			index = Math.floor(Math.random()*blog.length);
+			showBlog(index);
+		}
+
+	</script>
+</head>
+<body>
+	<div id="main">
+		<h3>Youcube - The blog for cube puzzlers</h3>
+		<span id="searchspan">
+			<input type="text" id="searchtext" name="searchtext" value="" />
+			<input type="button" id="search" value="search the blog" onclick="searchBlog();">
+			<input type="button" id="resetsearch" value="reset search" onclick="resetSearch();">
+			<input type="button" value="show random blog" onclick="showRandomBlog();">
+		</span><br>
+		<span>
+			<img src="https://images.unsplash.com/photo-1515508268448-
+			8d0d292bc49a?ixlib=rb-0.3.5&ixid=ey
+			JhcHBfaWQiOjEyMDd9&s=0603ddec68ba5b
+			5de8ef28ce2cf70f70&auto=format&fit=
+			crop&w=1650&q=8">
+		</span>
+		<!-- some image -->
+		<div id="blog"></div>
+		<span>
+			<input type="button" id="showall" name="" value="Show All Blog Entries" onclick="showBlog(-1);">
+		</span>
+	</div>
+</body>
+</html>

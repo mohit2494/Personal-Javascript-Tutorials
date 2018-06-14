@@ -1,0 +1,70 @@
+<!-- basics of callback function -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>rock example</title>
+	<style type="text/css">
+		#rockDiv{
+			margin: auto;
+			width: 50%;
+			border: 3px solid green;
+			padding: 10px;
+		}
+		img{
+			width: 100%;
+			cursor: pointer ;
+		}
+	</style>
+	<script type="text/javascript">
+		function touchRock(){
+			var username = prompt('what is your name?','Enter your name here');
+			if(username)  {
+				changeImageSource(function(){
+					console.log('alerting user');
+					alert('Nice to meet you ' + username + ' !' );
+				});
+			}
+			function changeImageSource(callback){
+				console.log('changing image source');
+				document.getElementById('rock').src = 'https://i.ebayimg.com/images/g/jAcAAOSwXshWrl7T/s-l300.jpg';
+				callback();
+				setTimeout(function(){
+					console.log('timeout called');
+					document.getElementById('rock').src = 'https://cdn0.iconfinder.com/data/icons/rock-paper-scissors-emoji/792/rock-paper-scissors-emoji-cartoon-027-512.png';
+				},3000);
+
+				// printing screen size for fun
+				console.log('Height for the screen is : ' + document.body.clientHeight);
+				console.log('Width for the screen is : ' + document.body.clientWidth);
+			}
+		}
+
+		function doSomething(){
+			// console.log(document.body.clientWidth);
+			// console.log(document.body.clientHeight);
+		}
+	</script>
+</head>
+<body onload="alert('Hello,I am your pet rock!');" onresize="doSomething();">
+	<div id="rockDiv">
+		<img id="rock" src="https://cdn0.iconfinder.com/data/icons/rock-paper-scissors-emoji/792/rock-paper-scissors-emoji-cartoon-027-512.png"
+		onclick="touchRock();">
+	</div>
+	<script type="text/javascript">
+		onLoad();
+		function onLoad() {
+			//apply listener to all the images
+			var imgs = document.getElementsByTagName('img');console.log(imgs.length);
+			for (var i = 0; i < imgs.length; i++) {
+				var div = document.getElementById('rockDiv');
+				imgs[i].addEventListener('mouseover',function(){
+					div.style.width 	= '60%';
+				});
+				imgs[i].addEventListener('mouseout',function(){
+					div.style.width = '50%';
+				});
+			}
+		}
+	</script>
+</body>
+</html>

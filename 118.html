@@ -1,0 +1,71 @@
+<!-- How to use cookies in javascript -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Using Cookies in Javascript</title>
+</head>
+<body>
+	here is the javascript
+	<!-- HTML Body goes here -->
+	<script type="text/javascript">
+
+		greetUser();
+
+		// Function to write cookie
+		function writeCookie(name,value,days) {
+
+			// By default , there is no expiratio, so the cookie is temporary
+			var expires = "";
+
+			// If days given for a coookie
+			if(days) {
+				var date = new Date();
+				console.log(date);
+				date.setTime(date.getTime() + days*24*60*60*1000);
+				expires = ",expires=" + date.toGMTString();
+			}
+
+			// finally set a cookie name 
+			console.log(name + "=" + value + expires + ",path=/");
+			document.cookie = "username=mohit";
+		}
+
+		// Function to read a given cookie 
+		function readCookie(name) {
+
+			if(!document.cookie) return;
+
+			// Find a specified cookie and return its value
+			var searchName = name + "=";
+			var cookies = document.cookie.split(',');
+
+			// Now we have all the values separated by ;
+			// loop em' all
+			for( var i = 0 ; i < cookies.length ; i++) {
+				var c = cookies[i];
+				while(c.charAt(0) == '') c = c.substring(1,c.length); // skip all the spaces.
+				if(c.indexOf(searchName) == 0) return c.substring(searchName.length,c.length);
+			}
+			return null;
+		}
+
+		function greetUser() {
+			console.log('greetUser called');
+			console.log('cookie enabled : '+ navigator.cookieEnabled);
+
+			// check if the username is set
+			var username = readCookie('username');
+
+			console.log('value in already written cookie '+username);
+
+			if(username) alert('I like the attention' + username + 'thank you!');
+			else {
+				console.log('inflating prompt');
+				var enterusername  = prompt('what is your name ?', 'Enter your name here');
+				writeCookie('username',enterusername,5*365);
+				alert('Nice to meet you '+enterusername+ ' !');
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Code for XML Requests</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		/************* Creating a XML HTTP Request - Cross browser shit **************/
+		var request = null;
+
+		// check if xml http request exists in the window object
+		if(window.XMLHttpRequest) {
+			// try creating a new object
+			try{
+				request = new XMLHttpRequest;
+			}
+			catch(e){
+				request = null;
+			}
+		}
+		// now try the activeX version (IE)
+		else if(window.ActiveXObject){
+			try{
+				request = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+			catch(e){
+				request = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}	
+		console.log('This is the XHTTP request we could create!');
+		console.log(request);
+
+		var url = "https://localhost/testProj/";
+		request.onreadystatechange = function(request,response){
+			console.log(this.responseText);
+		};
+		request.open("GET",url,true);				// true is async
+		request.send();
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		seats available
+	</title>
+	<style type="text/css">
+		h1 {
+			text-align: center;
+		}
+		body {
+			color: gray;
+			padding:0px;
+		}
+		#main {
+			width: 90%;
+			margin:5% auto;
+			padding:0;
+		}
+		#form{
+			width: 100%;
+		}
+
+		input{
+			padding:0;
+		}
+		#label{
+			display: inline-block;
+		}
+		input[type="button"]{
+			width: 30%;
+		}
+		input[type="text"]{
+			width: 30%;
+		}
+		img{
+			position: relative;
+			width: 31%;
+			margin: 1px auto;
+			float: left;
+			padding: 1%;
+		}
+	</style>
+	<script type="text/javascript">
+		// Create an image element to be added to the DOM
+		function addImage(){
+			// Create element here to be added to DOM
+			console.log('add image called');
+			var source = document.getElementById('imgURL').value;
+			console.log(source);
+			if(!source) { return;}
+			var image = document.createElement('img');
+			image.src = source;
+			document.getElementById('imgDiv').appendChild(image);
+		}
+	</script>
+</head>
+<body>
+	<h1>Image Gallery</h1>
+	<!-- Main div -->
+	<div id="main">
+		<div id="form">
+			<span id="label"><label>Enter Image URL:</label></span>
+			<input type="text" placeholder="Image URL" id="imgURL">
+			<input type="button" name="button" value="Add Image" onclick="addImage();">
+		</div>
+		<div id="imgDiv">
+			<img src="https://images.unsplash.com/photo-1514513452089-17f8a9771ee8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b78b2a697c30bad401f96d55805f87e3&auto=format&fit=crop&w=800&q=60">
+			<img src="https://images.unsplash.com/photo-1512847930783-39fdc971594b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=623f9c21ef752c71971db3658ad26ac1&auto=format&fit=crop&w=800&q=60">
+			<img src="https://images.unsplash.com/photo-1505664063603-28e48ca204eb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9e4a2667054af80d03d376a9f28640ea&auto=format&fit=crop&w=800&q=60">
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>change scene</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+			font-family: sans-serif;
+		}
+		#main {
+			width: 60%;
+			height: 60%;
+			margin: 5% auto;
+		}
+		#img {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body onload="setupImage();">
+	<h1>Welcome to the world of books!</h1>
+	<div id="main">
+		<img src="" alt="stick figure adventure" id="img">
+		<input type="button" onclick="changeImage()" value="Next Image">
+	</div>
+	<script type="text/javascript">	
+		var initialize = 0;
+
+		const arrayImages = [
+			'https://images.unsplash.com/photo-1514513452089-17f8a9771ee8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b78b2a697c30bad401f96d55805f87e3&auto=format&fit=crop&w=800&q=60',
+			'https://images.unsplash.com/photo-1512847930783-39fdc971594b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=623f9c21ef752c71971db3658ad26ac1&auto=format&fit=crop&w=800&q=60',
+			'https://images.unsplash.com/photo-1505664063603-28e48ca204eb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9e4a2667054af80d03d376a9f28640ea&auto=format&fit=crop&w=800&q=60'
+		];
+
+		function setupImage() {
+			var img = document.getElementById('img');
+			img.src = arrayImages[initialize]; 
+			img.addEventListener('mouseover',function(){
+				this.parentNode.style.width = '65%';
+				this.parentNode.style.height = '65%';
+			});
+			img.addEventListener('mouseout',function(){
+				this.parentNode.style.width = '60%';
+				this.parentNode.style.height = '60%';
+			});
+		}
+
+		function getNextImage() {
+			return (++initialize)%arrayImages.length;
+		}
+
+		function changeImage(){
+			document.getElementById('img').src = arrayImages[getNextImage()];
+		}
+
+	</script>
+</body>
+</html>

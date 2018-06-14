@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Prototype example
+	</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		// represents the blog class
+		function Blog(body,date) {
+			this.body = body;
+			this.date = date;
+		}
+
+		// using protype to build class specific functions
+		Blog.prototype.getDate = function(){
+			return this.date;
+		}
+
+		Blog.prototype.getBody = function(){
+			return this.body;
+		}
+
+		Blog.prototype.setDate = function(dateObject){
+			this.date = new Date(dateObject);
+		}
+
+		Blog.prototype.setBody = function(bodyText){
+			this.body = bodyText;
+		}
+
+		// Setting a class level variable
+		Blog.prototype.signature = "MOHIT KALRA.";
+
+		// This signature is specific to the blogger. 
+		// In case this needs to be a instance specific thing, this needs 
+		// to be put in the constructor and needs to be initialized 
+		// in the constuctor
+
+
+		/********** Adding methods to existing objects ***************/
+		Date.prototype.shortFormat = function(){
+			return ((this.getMonth()+1)+"/"+this.getDate()+"/"+this.getFullYear());
+		};
+
+		var mydate = new Date();
+		console.log(mydate.shortFormat());
+
+
+	</script>
+</body>
+</html>

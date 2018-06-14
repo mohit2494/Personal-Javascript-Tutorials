@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CUSTOM AJAX REQUEST</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		function AjaxRequest(request){
+			this.request = request;
+		}	
+
+		/************* This function sends a AJAX request to a desired URL ****************/
+		AjaxRequest.prototype.send = function(type,url,handler,postDataType,postData){
+			if(this.request != null)
+				this.request.abort(); // abort ajax request if no request object found
+
+			// dummy parameter to override browser caching
+			url += '?dummy' + new Date().getTime();
+
+			try{
+				this.request.onreadystatechange = handler ;
+				this.request.open(,,true);
+
+				if(type.toLowerCase() == "get"){
+					this.request.send(null); // no data to be sent in a get request
+				}
+				else{
+					this.request.setRequestHeader("Content-Type",postDataType);
+					this.request.send(postData);
+				}
+			}
+			catch(e){
+				console.log("Error communicating with AJAX \n Details: "+e);
+			}
+		}	
+
+		/**************** function to pull out all the content in a DOM node *************/
+		function getText(e){
+			var text = '';
+			if(!e) return;
+			if(e.childNodes) {
+				for (var i = 0 ; i < e.childNodes.length ; i++) {
+					var child = e.childNodes[i];
+					if(child.nodeValue){
+						text += child.nodeValue;
+					}
+					else{
+						if(child.childNodes)
+							if(child.childNodes[0].nodeValue)
+								text += child.childNodes[0].nodeValue; // Grab content only from the first element  and move on
+					}
+				}
+			}
+		}
+
+		/**
+			Function: Handles response
+			Object : Ajax Request
+			Data Exchange Format : XML.
+		 **/
+		
+		function handleRequest(){
+			// Everything is good only when
+			if(ajaxReq.getReadyState() == 4 && this.getStatus() == 200){
+				// 4 is that the request is loaded [sent]
+				// 200 represents 
+
+				// Generally the function used is this.getResponseText() but here XML's function is used
+				var xmlData = ajaxReq.getResponseXML().getElementsByTagName('blog')[0];
+				Blog.prototype.signature = "by "+ getText(xmlData.getElementsByTagName[0]);
+
+				var entries = xmlData.getElementsByTagName('entry'); 
+				for (var i = 0; i < entries.length; i++) {
+					blog.push(fe(i,"body"),fe(i,"date"),fe(i,"image"));
+				}
+			}
+		}
+
+		function fe(i,name){
+			return getText(entries[i].getElementsByTagName(name)[0]);
+		}
+
+	</script>
+</body>
+</html>
